@@ -1,0 +1,6 @@
+mcp
+pydantic
+pypdf
+python-docx
+httpx
+uvicorn
