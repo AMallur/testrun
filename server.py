@@ -280,4 +280,5 @@ if __name__ == "__main__":
     import os
     port = int(os.environ.get("PORT", 8000))
     mcp.settings.port = port
+    mcp.settings.host = "0.0.0.0"  # listen on all interfaces, not just localhost
     mcp.run(transport="streamable-http")
