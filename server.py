@@ -277,4 +277,7 @@ async def clause_finder_list_sections(params: ListSectionsInput) -> str:
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 8000))
+    mcp.settings.port = port
     mcp.run(transport="streamable-http")
