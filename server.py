@@ -281,4 +281,15 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     mcp.settings.port = port
     mcp.settings.host = "0.0.0.0"  # listen on all interfaces, not just localhost
+
+    # By default, FastMCP only trusts requests claiming Host: localhost or
+    # 127.0.0.1 (DNS-rebinding protection). A real deployment sits behind
+    # a host's proxy (e.g. Render), which forwards the real public hostname
+    # -- so that hostname must be explicitly allow-listed or every request
+    # gets rejected with "421 Misdirected Request".
+    deployed_host = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+    if deployed_host:
+        mcp.settings.transport_security.allowed_hosts.append(deployed_host)
+        mcp.settings.transport_security.allowed_origins.append(f"https://{deployed_host}")
+
     mcp.run(transport="streamable-http")
